@@ -1,0 +1,27 @@
+- id: 16508837
+  subject: Linux
+  subsubject: bash
+  type: explain
+  difficulty: easy
+  prompt: |
+      Explain what the following bash command does:
+      ```
+      mkdir -p foo/goo
+      ```
+  answer: |
+      If the foo directory does not exist, it will create it as well as a subdirectory called goo.
+      If the foo directory exists but the goo subdirectory does not exist, it will create the goo subdirectory.
+      If both already exist, it will do nothing.
+- id: 17041667
+  subject: Linux
+  subsubject: bash
+  type: explain
+  difficulty: easy
+  prompt: |
+      Explain what the following bash command does:
+      ```
+      n=`cat foo | wc -l`
+      ```
+  answer:
+      It counts the number of lines in the file foo and assigns the value to a variable named n.
+
