@@ -13,7 +13,7 @@ from Bio.Seq import Seq
 def calc_comp(sequence) :
     comp = dict()
 
-##### Part 1 : Your composition calculating code goes here
+##### Part 2 : Your composition calculating code goes here
 ##### Goal   : Fill in the dictionary comp with nucleotide frequencies
 
     return comp
@@ -24,7 +24,7 @@ def calc_comp(sequence) :
 def gen_sequence(comp, length) :
     seq_string = ''
 
-##### Part 2 : Your random sequence generating code goes here
+##### Part 3 : Your random sequence generating code goes here
 ##### Goal   : Fill in seq_string with a random sequence of given composition
 
     sequence = Seq(seq_string)
