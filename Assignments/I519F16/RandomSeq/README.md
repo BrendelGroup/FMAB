@@ -7,9 +7,9 @@ In this assignment, you will :
 3. Generate random sequences with the same composition
 4. Write the resulting random sequences to a file in FASTA format
 
-You are provided a core program written in python.
-If you choose to use that and complete the assignment in python, the 1st and 4th steps are coded in for you, so all you need to do is to fill in the lines for 3nd and 3rd steps.
-In any case, you will be graded on the input/output of your program; if it can read the input fasta and generate an output fasta with the specified sequences, you get full grades regardless of the actual program.
+You are provided a core program written in Python to guide you in this assignment.
+If you choose to use that and complete the assignment in Python, the 1st and 4th steps are coded in for you, so all you need to do is to fill in the lines for 2nd and 3rd steps.
+In any case, you will be graded on the input/output of your program; read the following instructions.
 
 ## Prerequisites
 
@@ -25,7 +25,7 @@ You can install it to your VM simply by typing :
 This is a very simple command; while acting as the superuser using `sudo`, it tells you package manager, `apt-get` to download and `install` a package, namely `python-biopython`.
 The second package, `python-biopython-doc` includes the documentation and is optional.
 You should be able to handle such simple commands without mindless copy-pasting.
-Because Linux is based on Ubuntu, which in turn has an enormous package repository, you can install many programs in this fashion. 
+Because Linux is based on Ubuntu, which in turn has an enormous package repository, you can install many programs in this fashion.
 There is even a graphical interface, called **synaptic** that enables you to search and install such packages.
 
 You will also need a text editor to modify the code.
@@ -36,7 +36,7 @@ You can :
   - Download and install [Atom](https://atom.io/), a very popular graphical text editor
   - Install an integrated development environment (IDE) such as [Spyder](https://github.com/spyder-ide/spyder)
 
-## Instructions (if you are using the core code and Python)
+## Instructions for Python(using the core code)
 
 Open the file main.py and read it.
 Go through and try the understand the structure of the program, it demonstrates good programming practices that you should familiarize yourself with.
@@ -46,11 +46,11 @@ This is so that you can see how a well written program should behave and focus o
 
 You can run the core program with the help parameter using `python main.py -h` to get a short summary of parameters.
 
-
-## Instructions (if you are using another programming language)
+## Instructions for any other programming language
 
 Comment your code well and add a README file to describe how to run it.
 Your program will take 3 inputs :
+
 1. Input file name
 2. Output file name
 3. Number of samples to be produced
@@ -61,3 +61,16 @@ As long as your output for a given input satisfies the conditions for any valid 
 Note that we are providing this option for the sake of openness.
 We believe such openness to be good practice but it also requires strict specifications.
 If you stray from the specifications, that is if your output is not readable by the Biopython's FASTA reader, **you will get no partial points**.
+
+## Submission
+
+You will submit this assignment into Canvas.
+Submission should include the code (and the README file) only.
+We do not want you to dump a bunch of irrelevant input/output files on us.
+You program will be tested with various inputs and output checked for quality
+
+## Exercise questions
+
+1. Would your program also work for a protein sequence? Why or why not?
+
+more to come later
