@@ -26,7 +26,7 @@ This is a very simple command; while acting as the superuser using `sudo`, it te
 The second package, `python-biopython-doc` includes the documentation and is optional.
 You should be able to handle such simple commands without mindless copy-pasting.
 Because Linux Mint is based on Ubuntu, which in turn has an enormous package repository, you can install many programs in this fashion.
-There is even a graphical interface, called **synaptic** that enables you to search and install such packages.
+There is even a graphical interface, called **synaptic** that enables you to search and install such packages; try it by typing `sudo synaptic`.
 
 You will also need a text editor to modify the code.
 Any text editor will do but some are more convenient than others.
