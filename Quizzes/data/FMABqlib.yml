@@ -1,4 +1,4 @@
-- id: 16508837
+- id: 16508837.1
   subject: Linux
   subsubject: bash
   type: explain
@@ -12,6 +12,24 @@
       If the foo directory does not exist, it will create it as well as a subdirectory called goo.
       If the foo directory exists but the goo subdirectory does not exist, it will create the goo subdirectory.
       If both already exist, it will do nothing.
+- id: 16508837.2
+  subject: Linux
+  subsubject: bash
+  type: continuing
+  difficulty: easy
+  prompt: |
+      Assume you wanted to run the previous command also with argument hoo instead of goo, i.e.
+      ```
+      mkdir -p foo/goo
+      mkdir -p foo/hoo
+      ```
+      How could you modify 'mkdir -p foo/goo' to achieve the same result, using only six additional characters?
+      
+  answer: |
+      Use bash brace expansion:
+      ```
+      mkdir -p foo/{goo,hoo}
+      ```
 - id: 17041667
   subject: Linux
   subsubject: bash
