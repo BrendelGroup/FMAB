@@ -26,17 +26,27 @@ class Question(object):
     def add_follow_up(self, question):
         self.followups.append(question)
 
-    def __str__(self):
+    def printout(self, qnum, outstream, answer=False):
+        key = 'prompt'
+        if answer:
+            key = 'answer'
+
+        spacer = '. '
         if self.is_multi_part:
-            string = '    1. ' + self.data['prompt'].replace('\n', '\n        ')
-            string = string.rstrip() + '\n\n'
+            spacer = '. \n'
+            text = '    1. '
+            # .replace adds indentation
+            text += self.data[key].replace('\n', '\n       ')
+            # .rstrip strips extra terminal whitespace
+            text = text.rstrip() + '\n\n'
             for i, fu in enumerate(self.followups):
-                string += '    {}. '.format(i + 2)
-                string += fu.data['prompt'].replace('\n', '\n        ')
-                string = string.rstrip() + '\n\n'
+                text += '    {}. '.format(i + 2)
+                text += fu.data[key].replace('\n', '\n       ')
+                text = text.rstrip() + '\n\n'
         else:
-            string = self.data['prompt'].replace('\n', '\n    ')
-        return string
+            text = self.data[key].replace('\n', '\n    ').rstrip() + '\n'
+
+        print(qnum, spacer, text, sep='', file=outstream)
 
 
 desc = 'Generate a quiz from the provided question library'
@@ -82,11 +92,6 @@ if args.rand > 0:
     questions = random.sample(questions, args.rand)
 
 for i, question in enumerate(questions):
-    spacer = ' '
-    if question.is_multi_part:
-        spacer = ' \n'
-    print(i + 1, '.', spacer, question, sep='', file=args.out)
-
+    question.printout(i + 1, args.out)
     if args.answers:
-        answer = qnum + q['answer'].replace('\n', '\n    ')
-        print(answer, file=args.answers)
+        question.printout(i+1, args.answers, answer=True)
