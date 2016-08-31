@@ -67,10 +67,11 @@ If you stray from the specifications, that is if your output is not readable by 
 You will submit this assignment into Canvas.
 Submission should include the code (and the README file) only.
 We do not want you to dump a bunch of irrelevant input/output files on us.
-You program will be tested with various inputs and output checked for quality
+You program will be tested with various inputs and output checked for quality.
 
 ## Exercise questions
 
 1. Would your program also work for a protein sequence? Why or why not?
-
-more to come later
+2. How would you validate (quality control) your program? Do you think you have all the tools already? 
+3. Which part of your program took the most time to run? How would you attempt to improve it?
+4. Can you provide a guesstimate on how many random sequences are 'enough' with respect to sequence length?
