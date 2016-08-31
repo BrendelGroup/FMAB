@@ -1,6 +1,5 @@
 #!/usr/bin/env python
-# Last edited by Volker Brendel, 2016-08-29.
-# Last edited by Daniel Standage, 2016-08-29.
+# Last edit by Daniel Standage, 2016-08-31.
 
 from __future__ import print_function
 import argparse
@@ -8,11 +7,43 @@ import random
 import sys
 import yaml
 
+class Question(object):
+    def __init__(self, data):
+        self.data = data
+        self.followups = list()
+
+        assert str(data['id']).count('.') <= 1
+        self.base_id = str(data['id']).split('.')[0]
+
+    @property
+    def followup(self):
+        return self.data['type'] == 'continuing'
+
+    @property
+    def is_multi_part(self):
+        return len(self.followups) > 0
+
+    def add_follow_up(self, question):
+        self.followups.append(question)
+
+    def __str__(self):
+        if self.is_multi_part:
+            string = '    1. ' + self.data['prompt'].replace('\n', '\n        ')
+            string = string.rstrip() + '\n\n'
+            for i, fu in enumerate(self.followups):
+                string += '    {}. '.format(i + 2)
+                string += fu.data['prompt'].replace('\n', '\n        ')
+                string = string.rstrip() + '\n\n'
+        else:
+            string = self.data['prompt'].replace('\n', '\n    ')
+        return string
+
+
 desc = 'Generate a quiz from the provided question library'
 parser = argparse.ArgumentParser(description=desc)
 parser.add_argument('--lib', type=argparse.FileType('r'), metavar='FILE',
-                    default='../data/FMABqlib.yml', help='question library file (default: '
-                    '"../data/FMABqlib.yml")')
+                    default='../data/FMABqlib.yml', help='question library '
+                    'file (default: "../data/FMABqlib.yml")')
 parser.add_argument('--out', type=argparse.FileType('w'), metavar='FILE',
                     default=sys.stdout, help='output file (default: stdout)')
 parser.add_argument('--answers', type=argparse.FileType('w'), metavar='FILE',
@@ -26,22 +57,36 @@ parser.add_argument('--rand', metavar='N', type=int, default=0,
                     'specified filtering criteria')
 args = parser.parse_args()
 
-questions = yaml.load(args.lib)
+basequestions = dict()
+
+allquestions = yaml.load(args.lib)
+questions = list()
+for q in allquestions:
+    qst = Question(q)
+    if qst.followup:
+        parent = basequestions[qst.base_id]
+        parent.add_follow_up(qst)
+    else:
+        basequestions[qst.base_id] = qst;
+        questions.append(qst)
+
 if args.sub:
-    questions = [q for q in questions if q['subject'] == args.sub]
+    questions = [q for q in questions if q.data['subject'] == args.sub]
 if args.subsub:
-    questions = [q for q in questions if q['subsubject'] == args.subsub]
+    questions = [q for q in questions if q.data['subsubject'] == args.subsub]
 if args.type:
-    questions = [q for q in questions if q['type'] == args.type]
+    questions = [q for q in questions if q.data['type'] == args.type]
 if args.diff:
-    questions = [q for q in questions if q['difficulty'] == args.diff]
+    questions = [q for q in questions if q.data['difficulty'] == args.diff]
 if args.rand > 0:
     questions = random.sample(questions, args.rand)
 
-for i, q in enumerate(questions):
-    qnum = '{:d}. '.format(i + 1)
-    prompt = qnum + q['prompt'].replace('\n', '\n   ')  # indentation
-    print(prompt, file=args.out)
+for i, question in enumerate(questions):
+    spacer = ' '
+    if question.is_multi_part:
+        spacer = ' \n'
+    print(i + 1, '.', spacer, question, sep='', file=args.out)
+
     if args.answers:
-        answer = qnum + q['answer'].replace('\n', '\n   ')
+        answer = qnum + q['answer'].replace('\n', '\n    ')
         print(answer, file=args.answers)
