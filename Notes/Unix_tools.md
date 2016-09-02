@@ -30,7 +30,7 @@ It can also be used to display [environment variables](https://en.wikipedia.org/
 
 `echo $PATH`  
 
-You can also **pipe** the output of echo to a file, which is very useful for creating simple files.
+You can also redirect the output of echo to a file, which is very useful for creating simple files.
 
 `echo 'file with a single line' > newfile`
 
