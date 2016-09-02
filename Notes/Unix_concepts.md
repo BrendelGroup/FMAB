@@ -1,288 +1,281 @@
-# Basic UNIX Shell Tutorial
+# A crash course on what is what in computing
 
-The book <u>Bioinformatics Data Skills</u> by Vince Buffalo (available on [Amazon](http://www.amazon.com/Bioinformatics-Data-Skills-Reproducible-Research/dp/1449367372/) and [O'Reilly Books](http://shop.oreilly.com/product/0636920030157.do)) offers a great chapter on the UNIX shell (the "command line").
-The level of this material is intermediate, however, and assumes that the reader has basic proficiency with the shell.
-If you are just beginning to learn the UNIX shell, the following tutorial (or any number of others you can find with a [simple Google search](https://www.google.com/#q=linux+command+line+tutorial)) may provide a gentle transition to the level of material covered in <u>Bioinformatics Data Skills</u>.
+## The computer
 
-**Note**: Computers running Linux or Mac OS X operating systems can be considered *UNIX machines*.
-Although there are some subtle differences between Mac and Linux (and even between different flavors of Linux), basic UNIX functionality should be consistent across these different operating systems.
-The Windows/DOS shell is a different beast entirely, which we will not cover at all here.
+A **Turing complete** machine, given enough time and space, can compute anything that is *computable*\*.
+All Turing complete machines are therefore equivalent and can **simulate** each other.
+Nearly all machines we call *computers* today are Turing complete, from the smart phone I can shove in my pocket, to the air conditioned supercomputers in UITS basements.
+It is much easier to simulate a smaller computer with a bigger computer (but reverse is also possible).
+When we simulate a computer using another one, we call this a **virtual machine**.
+But, why use a virtual machine when you have the real machine?
 
-## The Shell
+  * resource allocation
+  * security
+  * **reproducibility** = immunity from software and hardware changes
 
-The most common and most powerful method of interacting with a UNIX machine is through the shell (sometimes called the *command line* or *command prompt*, accessed through a *terminal* window).
-The basic idea behind the shell is pretty simple—you enter a command into the terminal, and the shell executes that command.
-Sometimes a command will print some text back to your terminal, and sometimes it will modify or create or delete files.
-This tutorial will give you an introduction to the types of commands you will need to know to navigate through the file system and run the scientific software.
+\* : In tradition started by Alan Turing himself, we let the philosophers worry about what it means to be computable.
 
-## Moving around
+## The programming languages
 
-Files on any computer are stored in a nested directory structure.
-When you use a Mac or Windows computer, you have probably learned to click on folders to open them, and to continue clicking on the additional sub-folders until you have located the file you are looking for.
+Machines speak **machine language**, we don't, so we have **programming languages**.
 
-When using the shell, you navigate through the file system a bit differently.
-When you open your terminal window, you start at a default location called your *home directory*.
-You then use the `cd` command to change your location—analogous to clicking on a folder on Mac or Windows.
+When we want to push the limits of hardware, we use **compiled languages** like C, C++, fortran
 
-Whenever the prompt is open, you can type the `pwd` command to show your current location (`pwd` is short for *print working directory*).
-If I open a terminal on my UNIX machine and type *pwd*, it will show me the location of my default directory.
+When we want rapid prototyping and development, we use **interpreted languages** like
 
-```
-[standage@localhost ~]$ pwd
-/home/standage
-[standage@localhost ~]$
-```
+  * **Python** : easy to learn, powerful to wield
+  * **Perl** : was very popular before Python came along
+  * **R** : purpose built for statistical computing
+  * **Bash** : very convenient for some tasks, practically useless for anything else
+  * **Julia** : the future of interpreted languages (up for debate)
+  * **MATLAB** : proprietary and should be avoided at all costs
+  * **Java** : a whole different animal with distinct pros and cons, not common in academia
 
-The `pwd` command printed `/home/standage` as my current location.
-That means by default, my command prompt is in a directory called `standage`, which is inside of another directory called `home`, which is at the root of the file system.
-To see the files in this directory, I can use the `ls` command.
+In this class, **you can use any programming language** you prefer, as long as it gets the job done.
+Just like all (turing complete) computers are equivalent, all (turing complete) programming languages are also equivalent and can replace (simulate) each other.
+In this class, there is no need for you to use compiled languages, as this would be inconvenient for such small projects.
+In reality, serious, scalable programs (BLAST, MEME etc.) are always written in C whereas smaller projects may be done in python, perl or R.
 
-```
-[standage@localhost ~]$ ls
-Desktop
-[standage@localhost ~]$
-```
+## POSIX, and why we do it
 
-It looks like the only file in my home directory is another directory called `Desktop`.
-If I want to go to that directory, I use the `cd` command (short for *change directory*).
+In the beginning, there was UNIX.
+Imagine 70s when there were a handful of computers on the face of Earth and the lucky few who had access had to share them.
+Unix was an operating system designed to handle this situation.
+While hardware got cheaper and more widespread, licensing UNIX became an issue, so many operating systems (OS) emulating its behavior were written independently.
+Long story short, POSIX standards capture the original UNIX behavior and provide a uniform environment across operating systems.
+Even though personal computers are abundant and orders of magnitude faster today, the situation in the bleeding edge is very similar to 70s; we have few very powerful computers shared by many researchers for heavy workloads.
+Such environments are largely POSIX compliant, so familiarizing yourself with POSIX behavior will help you feel at home in any high performance computing environment.
 
-```
-[standage@localhost ~]$ cd Desktop
-[standage@localhost Desktop]$
-```
+In addition to forming a unifying platforms, POSIX standards require modularity, which is evident throughout the layers of the operating system.
+This modularity encourages programs that do one thing and do it well, which we usually connect together to make **workflows**, tackling any workload imaginable.
+If you are interested in the history and underlying principles of UNIX check out [this classic book](http://catb.org/~esr/writings/taoup/html/) that is also available online for free.
+This is a surprisingly fun read considering the overwhelming title; the first chapter can be casually read to gain precious insight.
 
-You can see that the command did not print out any output like the previous ones did, but now my prompt looks different.
-Before, it showed `~` as my current location, but now it shows `Desktop`.
-As you navigate around the file system, your prompt may be updated to reflect your location.
-Remember, you can always figure out where you are by typing the `pwd` command.
+*Note that sometimes the term '\*nix' is used to refer to all UNIX-like, or POSIX compliant operating systems.*
 
-If I want to go back to my home directory, I can do this in several ways.
-  * The symbol `~` is a shortcut for my home directory. I can go to my home directory at any time using the command `cd ~`.
-  * The symbol `..` represents the parent directory of the current directory. For example, if I am in the directory `/home/standage/Desktop`, then `..` corresponds to `/home/standage`, `../..` corresponds to `/home`, and `../../..` corresponds to the root directory `/`. Another way to get to my home directory from `/home/standage/Desktop` is to use the command `cd ..`.
-  * If you enter the command `cd` without any file or directory name after it, the command will take you back to your home directory.
+## Linux is the kernel
 
-```
-[standage@localhost Desktop]$ cd ~
-[standage@localhost ~]$ pwd
-/home/standage
-[standage@localhost ~]$ cd /usr/lib64/httpd/modules/
-[standage@localhost modules]$ pwd
-/usr/lib64/httpd/modules
-[standage@localhost modules]$ cd ..
-[standage@localhost httpd]$ pwd
-/usr/lib64/httpd
-[standage@localhost httpd]$ cd ../..
-[standage@localhost usr]$ pwd
-/usr
-[standage@localhost usr]$ cd
-[standage@localhost ~]$ pwd
-/home/standage
-[standage@localhost ~]$
-```
+Linux is an open source piece of software that was meant to behave in a very POSIX compliant way.
+It has over 20 years of development and community support behind it so it is very stable and widely used in production systems.
+It is not an operating system, but only a component of it, namely **the kernel.**
 
-## Tab completion
+We as humans have no direct interaction with the kernel, we interact with the **shell**, which interacts with the **kernel**, which interacts with the **hardware** (through a BIOS, if you will).
+Claiming we 'use Linux', is a bit of a misconception in this sense, but more on this later.
 
-If you want to save time when typing long directory or file names, start typing the first 2 or 3 letters of the directory and then hit the `Tab` button.
-This will autocomplete (fill in) the rest of the directory/file name for you.
-If more than one directory starts with those 2 or 3 letters, then it will fill in as much as it can automatically.
-This will save you a lot of time and help prevent typos.
+## Bash is the shell
 
-## Commands
+There are many ways to interact with the Linux kernel and each one of these these is called a **shell**.
+**Bash is by far the most common shell you'll find in a Linux system, and is fully POSIX compliant.**
+Once you are comfortable with bash, you are golden: It does not matter if there is Linux, MacOS or BSD running under the hood, whether it is a low-end music server or a supercomputer, bash is bash.
+Even if you run into a shell that is not bash, chances are it will be built on bash and will provide its basic functionality, and then some, just like bash provides basic POSIX functionality, and then some.
 
-### Path configuration
+Wrapping up, **hardware + kernel + shell = usable computer**.
+As a user, the only part you are dealing with is the shell.
+Bash is your shell, in Bash you feel at home.
 
-When you type a command like `ls` or `pwd` or `cd`, you are actually running a program.
-There is a special program file in some directory on your computer called `ls`, and when you enter the `ls` command your computer executes that program.
+In your virtual machines, you also have a **graphical shell** available to you, this is what you are interacting with when you boot it up and start clicking around.
+You can still fire up a **terminal** and access bash through the graphical interface.
+Even though most of our actual work will be done in a non-graphical environment, running a graphical shell is desirable over a 'pure terminal' environment, because this way you can have multiple terminals open on your screen, copy paste with a mouse, search things in a browser window etc.
+Note that while being optional in our class, ability to comfortably work in a purely non-graphical environment is an extremely valuable skill.
 
-How does your computer know where to find the `ls` program (or any other program command you type)?
-There is a setting on your computer called your *path*--it is a list of directories on your computer.
-When you type in the `ls` command, your computer looks at all the directories in your path until it finds a program called `ls`, and then it executes it.
-You will need to remember this when you begin compiling programs on your VM.
-If you do not copy your program into a path folder or update your path settings, then your computer will not know how to find and execute the program you just installed.
+## What is a distribution ?
 
-### Redirecting output
+Sometimes a community (of software developers) will package a collection of software based on the Linux kernel, providing a complete and coherent operating system and **repositories of software**.
+Such collections are called 'distributions', and many popular ones are available for free.
+Examples are Debian, Ubuntu, Suse, RedHat, CentOS, Arch, and Mint.
+The Linux Mint we have running in our VMs are Ubuntu based, which is in turn Debian based.
+But note that the differences between distributions **will NOT be pronounced in your daily usage**, they are mostly evident in system administration and will be invisible to you as a user.
+Remember, all you are using is the shell, which is bash, which is POSIX compliant, be aware that there are different flavors of Linux based OS, but do not worry about the distribution unless you are also maintaining the machine.
 
-Many programs will print output to your screen.
-When you enter the `pwd` command, the output is a single line of text showing current directory.
-However, some commands may print thousands of lines--more than can fit on your screen.
-How do you manage the output?
+Note that we often use 'Linux' to refer to such a distribution as a complete OS and not the 'Linux kernel'.
+This is a conflicting but widely used terminology, and now you know what is what.
 
-One way is to redirect the output to a file using the `>` character.
+## The super user
 
-```
-[standage@localhost ~]$ cd /usr/bin
-[standage@localhost bin]$ ls > ~/newfile.txt   # Save the output to a new file
-[standage@localhost bin]$ wc -l ~/newfile.txt  # Count the lines in this new file
-1672 /home/standage/newfile.txt
-[standage@localhost bin]$
-```
+As mentioned before, the POSIX standards are based on a multi-user scheme.
+Most of these are regular users which each belong to a set of groups, with given permissions, but one, namely **root**, is special in that it has unrestricted access to everything.
+**The user 'root' is the superuser, he does not have permissions, he sets the permissions.**
 
-There are 1672 files in the `/usr/bin` directory.
-If we simply typed in `ls` without redirecting the output to a file, it would have overloaded the screen!
+In most occasions, you will be a regular user, and your scope will be limited by set **permissions**.
+In the case of our VM, you do have root access (password is i519) to your VM.
+You can prefix your commands with `sudo` to act as the superuser, [this](https://www.xkcd.com/149/) is pretty much how it works.
+In the rare occasion when you are the super user, you must tread carefully, for with great power comes great responsibility.
+As it is very easy to revert your VM to its initial state (re-download), feel free to try how much damage you can do with a simple command.
 
-Another common approach in UNIX is to "pipe" programs together.
-If you place a pipe "|" character between two programs, then the terminal will use the output of the first program as the input for the next program.
-For example, we can pipe the `ls` output into the `grep` program to select only those lines that contain "eat".
+### Excercise : Destroy your OS
 
-```
-[standage@localhost bin]$ ls | grep eat
-create-branching-keyboard
-create-jar-links
-euca-create-snapshot
-euca-create-volume
-[standage@localhost bin]$
-```
+Backup your VM.
 
-If you want to or need to, you can use multiple pipes in a single command.
-In each case, the output from the former command will be used as input for the latter command.
+`sudo rm -r /`
 
-### Command history
+Your VM is dead now, no confirmations, no chance of recovery, you had the power and you used it unwisely.
+Observe that all it takes is 12 characters to destroy your OS as a super user, this could easily be a typo.
 
-In the command prompt, you can use the up and down arrows on your keyboard to search through commands you have entered previously.
-If you want to see your entire (recent) command history, type `history`.
-This could be a lot of output, so you may want to redirect it to a file or pipe it into grep to search for a specific command.
+Restore your VM from the backup, or re-download.
 
-### Manuals
+Be very careful if you ever get root privileges in real life.
+Be very very careful.
+**NEVER, ever copy-paste a command that starts with sudo.**
 
-If you forget how to use a command, there are manuals (or "man pages") available on your system to remind you.
-To see the manual for `grep`, type `man grep`.
-You can use your up and down arrows to scroll, and then just hit `q` when you're done.
+**NEVER, ever copy-paste a command that starts with sudo.**
 
-### File management
+**NEVER, ever copy-paste a command that starts with sudo.**
 
-Now that you've got the basics down, I will use a lot less words and simply demonstrate by example.
-Remember that UNIX filenames are case-sensitive (in other words, "Desktop" is not the same as "desktop").
 
-### Copying files and directories
+## The filesystem
 
-```
-[standage@localhost bin]$ cd
-[standage@localhost ~]$ ls
-Desktop  newfile.txt
-[standage@localhost ~]$ cp newfile.txt anotherfile.txt        # Create a copy of 'newfile.txt' called 'anotherfile.txt'
-[standage@localhost ~]$ ls                     
-Desktop  anotherfile.txt  newfile.txt
-[standage@localhost ~]$ ls Desktop/
-idrop.desktop
-[standage@localhost ~]$ cp newfile.txt Desktop                # Create a copy of 'newfile.txt' and place it in the 'Desktop' directory
-[standage@localhost ~]$ ls Desktop/
-idrop.desktop  newfile.txt
-[standage@localhost ~]$ cp newfile.txt Desktop/crazyfile.txt  # Create a copy of 'newfile.txt' called 'crazyfile.txt' and place it in the 'Desktop' directory
-[standage@localhost ~]$ ls Desktop
-crazyfile.txt  idrop.desktop  newfile.txt
-[standage@localhost ~]$ cp -r Desktop anotherDirectory        # Create a copy of the 'Desktop' directory and all its contents and call it 'anotherDirectory'
-[standage@localhost ~]$ ls
-Desktop  anotherDirectory  anotherfile.txt  newfile.txt
-[standage@localhost ~]$ ls anotherDirectory
-crazyfile.txt  idrop.desktop  newfile.txt
-[standage@localhost ~]$
-```
+The filesystem has a **rooted tree** structure, with a singular **root**, that is called **/**.
+All file paths therefore start with /.
 
-### Moving and renaming files and directories
+This means you don't have drive letters like c: and d:, so what happens if you have multiple storage devices?
+You can **mount** them at arbitrary locations, this is a feature that is hard to grasp at first but extremely useful once understood.
+Long story short, each directory you open may be located on a different storage device, or even a different computer and this has implications you have to consider.
+You also have **hard and soft links** which means that multiple different files or folders may in fact be the same file or folder.
+Both the concept of **mounting** and **linking** may sound scary at first but they are immensely powerful once you start using them to your advantage.
+For example :
+  * you can **mount** a folder from a remote computer into your local computer and treat it like a regular directory.
+  * you can hard **link** a large file into multiple folders to avoid copying and syncing them.
 
-```
-[standage@localhost ~]$ ls
-Desktop  anotherDirectory  anotherfile.txt  newfile.txt
-[standage@localhost ~]$ mv newfile.txt oldfile.txt            # Rename 'newfile.txt' to 'oldfile.txt'
-[standage@localhost ~]$ ls
-Desktop  anotherDirectory  anotherfile.txt  oldfile.txt
-[standage@localhost ~]$ mv oldfile.txt anotherDirectory       # Move 'oldfile.txt' to the directory 'anotherDirectory'
-[standage@localhost ~]$ ls
-Desktop  anotherDirectory  anotherfile.txt
-[standage@localhost ~]$ ls anotherDirectory
-crazyfile.txt  idrop.desktop  newfile.txt  oldfile.txt
-[standage@localhost ~]$ mv anotherDirectory Desktop           # Move the directory 'anotherDirectory' into the directory 'Desktop'
-[standage@localhost ~]$ ls
-Desktop  anotherfile.txt
-[standage@localhost ~]$ ls Desktop
-anotherDirectory  crazyfile.txt  idrop.desktop  newfile.txt
-[standage@localhost ~]$
-```
+The crafty usage of these features are beyond the scope of this class and generally comes with experience but at the very least you need to be aware of their existence.
 
-### Creating an empty directory
+### Permissions
 
-```
-[standage@localhost ~]$ ls               
-Desktop  anotherfile.txt
-[standage@localhost ~]$ mkdir testDirectory
-[standage@localhost ~]$ ls
-Desktop  anotherfile.txt  testDirectory
-[standage@localhost ~]$ ls testDirectory
-[standage@localhost ~]$
-```
+In a \*nix filesystem, each file has an **owner** and **permissions**, you have to familiarize yourself with these as they can be confusing or get you in trouble in multiple ways.
 
-### Deleting files and directories
+Under the root directory, you will have some directories such as /bin, /boot, /etc, /sys, /var ,
+These are components of your operating system, although they could be named anything, they are usually named consistently across distributions.
+We do not mess with these unless we know what we are doing, and could not mess with them even if we want to because of permissions.
 
-Be careful...by default, UNIX will not ask you if you are sure you want to delete the file.
-Once you delete it, it's gone.
-No recovery from Recycle Bin or Trash or anything like that.
+Your **home** is where you own all the files and have free reign (write permissions).
+This is usually found in /home/*username* or /mnt/home/*username*, but could be located anywhere.
+This is also where you start  as your **working directory** when you login to your shell by default.
+In addition to your home, you may have multiple places where you have write permissions, these may be on different storage devices and have different properties.
 
-```
-[standage@localhost ~]$ ls
-Desktop  anotherfile.txt  testDirectory
-[standage@localhost ~]$ rm anotherfile.txt    # Delete file
-[standage@localhost ~]$ ls
-Desktop  testDirectory
-[standage@localhost ~]$ rm -r testDirectory/  # Delete directory
-[standage@localhost ~]$ ls
-Desktop
-[standage@localhost ~]$
-```
+For example, on the IU systems each user gets a :
+  - **home** directory that is small but accessible across computers
+  - **scratch** directory that offers a lot of space, is fairly fast but not backed up
+  - **storage** directory which is very slow but offers a lot of space and is backed up
 
-### Viewing files
+You need to understand how you can access these and how to make efficient use of them with respect to your workload.
 
-  * `less`: will display the file; use up/down arrows to scroll, f/b to page, q to quit
-  * `head`: print the first 10 lines of the file to the terminal; use `head -n x` to print the first x lines of the file
-  * `tail`: print the last 10 lines of the file to the terminal
+#### Exercise
 
-### Editing files
+Let's figure out who owns these system folders.
 
-  * `nano`: not very popular, but probably the simplest for beginners; command hints are shown at the bottom of the screen
-  * `vi` and/or `vim`: popular text editor, but different editing modes can be confusing at first
-  * `emacs`: also popular, but it has its own quirks
+`ls -l /`
 
-Beware! Many professional programmers often have very strong feelings about which text editor is best.
-My favorite is `vim`, but `nano` is probably the simplest and best option for beginners.
+*Who owns these files? What does the 10 character-string mean?*
 
-### Archives and compression
+`ls -l ~`
 
-Sending large data files or programs over the internet can take a long time, so to speed the process up files are often compressed.
-Zip archives (files with a `.zip` extension) are quite common, but there are a few others you will frequently see with UNIX.
-Depending on the type of compression used, you will need to use a different command to decompress and access the files.
+*How about these? Can  the superuser write these files?*
 
-|   Extension             |    Command    |   Example   |
-|-------------------------|---------------|--------------------------------------|
-|   `.zip`                |  `unzip`      |  `unzip myfiles.zip`                 |
-|   `.bz2`                |  `bunzip2`    |  `bunzip2 allMySequences.fasta.bz2`  |
-|   `.gz`                 |  `gunzip`     |  `gunzip allMyGenes.gff3.gz`         |
-|   `.tar`                |  `tar`        |  `tar xf myDirectory.tar`            |
-|  `.tar.gz` or `.tgz`    |  `tar`        |  `tar xzf myProgram.tar.gz`          |
-|  `.tar.bz2`             |  `tar`        |  `tar xjf myApp.tar.bz2`             |
+#### Pro tip
 
-## Installing software
-Some software can be run directly from plain text files—these are typically called "scripts" (Perl, Python, bash, etc).
-However, many software applications have source code that must be compiled into a executable binary file before it can be run.
-This is the case with most of the software we will be using this semester.
+I usually **soft link** my scratch and storage folders to my home folder, and **mount** my home folder to my local machine, so I can access all my files on IU servers as if they were on my laptop.
+This requires no additional software in a POSIX compliant system and can be done entirely using native features.
 
-The first step to installing software on your UNIX machine is to download the source code, using either your web browser or a command like `wget` or `curl`.
-If necessary, you will need to decompress the source code.
-If you downloaded the program from a web page, then that page probably includes installation instructions as well.
-However, it is common for installation instructions to be included with the source code as well.
-They are usually kept in files called `README` or `INSTALL` or something like that.
-You should follow the instructions in these files to install the software.
-A very typical installation process goes as follows.
+## Shell commands
 
-```
-./configure
-make
-sudo make install
-```
+Bash also has scripting capabilities but we mostly use it interactively.
+In this case we enter commands to the **command line** to be executed one by one.
+These commands generally consist of the name of a program to be executed, and parameters to be passed to that program.
+A lot of programs have a default behavior they demonstrate when executed with no parameters, but some require parameters.
+Let's look at ls for example :
 
-This isn't universal, but it is very common and you will see it come up frequently in this course.
-Each of these commands will generally print *a lot* of output to the terminal.
-Don't worry about trying to read it all, you can ignore most of it.
-However, if there is a problem, hopefully the last few lines of output will make that clear.
-The more experience you get with this, the easier it will be to recognize.
+  * `ls` prints a list of the files in our **working directory**
+  * `ls -l` prints the same list, but in a more detailed (long) format
+  * `ls -a` prints will include files starting with . as they are excluded by default
+  * we can use the long form `ls --all` to get the same behaviour
+  * we can also combine these two parameters as `ls -l -a` or even as `ls -la`
+  * `ls dirpath` will list the files in dirpath rather than the working directory
 
-Take a look at the terminal recording below for a simple example of a typical software installation.
-<script type="text/javascript" src="https://asciinema.org/a/2077.js" id="asciicast-2077" async></script>
+
+So in all of these examples, we are executing the same program, ls, but with different parameters which yield different outputs.
+In some bioninformatics programs you will need to specify many parameters such as input files, output files, algorithmic parameters etc. to get any kind of meaningful output.
+
+### Exercise
+
+How would you list all the files in dirpath, including hidden ones? Does parameter order matter?
+
+## Documentation
+
+So how did I know about how ls would behave with those parameters?
+I know them by heart because those are some parameters I use on a daily basis, but there are many others I don't, what to do if I need to use one of those someday?
+I read the man pages, they explain the expected behaviour of the program wrt to the input and parameters.
+Most programs come with a standard manpage, and these are accessible from your terminal at all times.
+Try it for yourself by typing 'man ls'.
+Most common commands, like ls, will have a few parameters that you will use often, and others you use rarely if ever, and they will all be explained in the man page.
+In this day and age, you'd be tempted to google everything, but consider the man page as a letter written from the author of the program to you, it will help you understand what the program was intended to do from first hand.
+
+Some of the larger, especially scientific, software may ship with pdf manuals instead of manpages, in this case that is your reference.
+
+Most programs also have a **-h** or **--help** parameter that will print a short explanation and a list of commonly used parameters.
+This is a great way to get a quick look at what it does.
+
+Once you learn to depend on documentation of others, a natural next step is to get used to documenting your work so that others can depend on yours.
+
+### Exercise :
+
+`cd path` command changes the working directory to the one at the given path.
+Can you figure out what happens if we run `cd` without any parameters?
+
+### Pro tip :
+
+RTFM, is a shorthand for 'Read The F*ing Manual'.
+It is ok to ask naive questions sometimes, but if you go around a forum and start asking the simplest principles of a program directly to its community, you will be told to RTFM.
+This is generally not a good sign and you don't want to get on the wrong side of a community that supports free software.
+Do not let it come to that, RTFM from the beginning.
+Good documentation represents the cumulative effort of the author and community to support their software, it is a valuable resource, use it.
+
+### Fun fact :
+
+PEBKAC, is a shorthand for 'Problem Exists Between Keyboard and Chair'.
+Although it is not as common as RTFM and is meant to be more humorous, it means you probably have a misconception about the program and perhaps reporting a bug that is actually a feature.
+
+## Streams and redirection
+
+Before understanding streams, you need to understand a very fundamental \*nix idea: each program behaves like a filter on a stream of data.
+Each program takes an input and generates an output, this is an essential feature of \*nix programming philosophy that allows us to daisy-chain programs into workflows.
+This is also why such programs usually do not have graphical user interfaces; they simply follow another programming paradigm.
+
+Posix systems generally have two output streams, namely **stdout** and **stderr** and both are printed on your display by default.
+Most programs will generate some sort of output and push it to **stdout**, which you see printed in your terminal.
+Unexpected output such as disk or network related errors are pushed to **stderr**, to seperate them from the actual output of the program.
+We usually do not worry too much about stderr until things start to go wrong and we have to figure out why.
+There is also **stdin** that consists of keys you press after the program started running, that is your input to the program.
+
+Wrapping up : **stdin -> program + parameters -> stdout (+stderr)**
+
+This is all well if you are running a quick command, checking out first few lines of a file, listing directories etc. but sometimes you have large outputs that you want to keep for later analysis.
+Often times, programs will provide an output file parameter such as **-o** or **--out**, but they don't have to.
+Bash has piping and redirection operators that can juggle these streams around.
+There are three such operators you need to know by heart.
+
+  * | takes stdout from one program and pipes it into stdin for another
+  * > takes stdout from one program and directs it into a file
+  * < takes a file and streams it into stdin of a program
+
+In the end we get **workflows** like :
+
+input -> program 1 -> program 2 -> program 3 -> file
+
+Note that it is not important which **programming language** these programs are written in.
+We often use different languages to tackle different problems, and as long as all our program runs on linux, bash can pipe them together to make a workflow.
+Sometimes when simple piping does not cut it, we write small **bash scripts** to automate more complicated processes.
+
+Thinking about programs in such modular fashion and connecting them together in a robust fashion is a most fundamental skill you need to develop.
+Even though our unofficial textbook does a great job explaining this, at this point it is a really good idea to give [the book I mentioned before](http://catb.org/~esr/writings/taoup/html/) a chance.
+
+## Process management
+
+If you have a graphical interface, it is straightforward to run multiple terminals, or kill some of the open terminals, as you can go pointy-pointy-clicky-clicky, but this is not always the case with high performance computers.
+Even before there were monitors connected to computers, let alone graphical interfaces, UNIX was designed as a multi-user, multi-tasking OS, so is POSIX, so we are well equipped for this.
+
+In a bash session, if you have a program actively running, you can press ctrl+c, which will kill that process irreversibly.
+This is very useful when you realize you started a long program with wrong parameters etc.
+
+You can also 'pause' the program, using ctrl+z, and run it in the background by typing **bg**, which enables you to do other things in the same terminal while it is running.
+If you want to get back to the program running in the background, you can 'foreground' it again by typing **fg**.
+
+Although there are very fancy things you can learn to do wrt process management, these three tricks should take you a long way.
