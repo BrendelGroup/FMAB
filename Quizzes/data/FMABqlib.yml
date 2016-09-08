@@ -197,3 +197,16 @@
       Whenever the original sequence starts and ends with the same letter, then
       there may be alternative solutions starting from an internal node of the
       representative graph.  In this case, CGCTGAC or GACGCTG are examples.
+- id: 38616138
+  subject: Linux
+  subsubject: pipe
+  type: explain
+  difficulty: easy
+  prompt: |
+      Explain what the following command does:
+      ```bash
+      ls *.pl | wc -l
+      ```
+  answer: |
+      The command tells us how many files we have in the current directory
+      that end with .pl.
