@@ -78,7 +78,7 @@
       ```
       How could you modify 'mkdir -p foo/goo' to achieve the same result, using
       only six additional characters?
-      
+
   answer: |
       Use bash brace expansion:
       ```
@@ -210,3 +210,39 @@
   answer: |
       The command tells us how many files we have in the current directory
       that end with .pl.
+- id: 55753913
+  subject: Linux
+  subsubject: filesystem
+  type: explain
+  difficulty: easy
+  prompt: |
+      If your current directory, as reported by `pwd`, is
+      `/data/fastq/hexapoda/`, how would you change your current directory to
+      `/data/gff3/viridiplantae/`? Provide an answer using an absolute path and
+      another using a relative path.
+  answer: |
+      With an absolute path, the command is `cd /data/gff3/viridiplantae/`. With
+      a relative path, the command is `cd ../../gff3/viridiplantae/`.
+- id: 49547459
+  subject: Linux
+  subsubject: filesystem
+  type: explain
+  difficulty: moderate
+  prompt: |
+      Consider the following scenario: your current directory is
+      `/home/alice/rabbit/hole/` and you enter the command
+      `pushd /software/bwa/` followed by the command `pushd /data/bam/mammalia`
+      followed by the command `popd`. What is your current directory now?
+  answer: The current directory is now `/software/bwa/`.
+- id: 31203497
+  subject: Linux
+  subsubject: filesystem
+  type: explain
+  difficulty: easy
+  prompt: |
+      If your current directory is `/home/alice/projects/dna-seq/` and you
+      invoke the command `cd ../alignment/smith-waterman/`, what is your current
+      directory now? Please provide the full absolute path.
+  answer: |
+      The current directory is now
+      `/home/alice/projects/alignment/smith-waterman/`.
