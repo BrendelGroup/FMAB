@@ -9,21 +9,75 @@
       mkdir -p foo/goo
       ```
   answer: |
-      If the foo directory does not exist, it will create it as well as a subdirectory called goo.
-      If the foo directory exists but the goo subdirectory does not exist, it will create the goo subdirectory.
-      If both already exist, it will do nothing.
+      If the foo directory does not exist, the command will create foo as well
+      as a subdirectory called goo.
+      If the foo directory exists but the goo subdirectory does not exist, the
+      command will create the goo subdirectory.
+      If both foo and its subdirectory goo already exist, the command will do
+      nothing.
 - id: 16508837.2
   subject: Linux
   subsubject: bash
   type: continuing
   difficulty: easy
   prompt: |
-      Assume you wanted to run the previous command also with argument hoo instead of goo, i.e.
+      Assume you wanted to run the previous command also with argument hoo
+      instead of goo, i.e.
       ```
       mkdir -p foo/goo
       mkdir -p foo/hoo
       ```
-      How could you modify 'mkdir -p foo/goo' to achieve the same result, using only six additional characters?
+      How could you modify 'mkdir -p foo/goo' to achieve the same result, using
+      only six additional characters?
+  answer: |
+      Use bash brace expansion:
+      ```
+      mkdir -p foo/{goo,hoo}
+      ```
+- id: 17041667
+  subject: Linux
+  subsubject: bash
+  type: explain
+  difficulty: easy
+  prompt: |
+      Explain what the following bash command does:
+      ```
+      n=`cat foo | wc -l`
+      ```
+  answer: |
+      The command counts the number of lines in the file foo and assigns the
+      value to a variable named n.
+- id: 16508837.1
+  subject: Linux
+  subsubject: bash
+  type: explain
+  difficulty: easy
+  prompt: |
+      Explain what the following bash command does:
+      ```
+      mkdir -p foo/goo
+      ```
+  answer: |
+      If the foo directory does not exist, the command will create foo as well
+      as a subdirectory called goo.
+      If the foo directory exists but the goo subdirectory does not exist, the
+      command will create the goo subdirectory.
+      If both foo and its subdirectory goo already exist, the command will do
+      nothing.
+- id: 16508837.2
+  subject: Linux
+  subsubject: bash
+  type: continuing
+  difficulty: easy
+  prompt: |
+      Assume you wanted to run the previous command also with argument hoo
+      instead of goo, i.e.
+      ```
+      mkdir -p foo/goo
+      mkdir -p foo/hoo
+      ```
+      How could you modify 'mkdir -p foo/goo' to achieve the same result, using
+      only six additional characters?
       
   answer: |
       Use bash brace expansion:
@@ -40,6 +94,119 @@
       ```
       n=`cat foo | wc -l`
       ```
-  answer:
-      It counts the number of lines in the file foo and assigns the value to a variable named n.
+  answer: |
+      The command counts the number of lines in the file foo and assigns the
+      value to a variable named n.
+- id: 31498539.1
+  subject: biology
+  subsubject: genomics
+  type: explain
+  difficulty: easy
+  prompt: |
+      Please briefly answer the following questions, in your own words.
+      Why is DNA considered a "polymer"?
+  answer: |
+      DNA is considered a polymer because it consists a chain of "building
+      block" (in this case: four distinct nucleotides, abbreviated A, C, G, T)
+      that are repeated throughout the chain in a specific order.
+- id: 31498539.2
+  subject: biology
+  subsubject: genomics
+  type: continuing
+  difficulty: easy
+  prompt: |
+      What is meant the term "DNA directionality"?
+  answer: |
+      A double-stranded DNA nucleotides consistes of two strands of nucleotides
+      that are arranged in opposite chemical direction of each other: the "top"
+      strand has nucleotides placed in 5' to 3' direction, while the "bottom"
+      strand has nucleotides arranged in 3' to 5' direction.  Here 5' and 3'
+      refer to the numbered carbons in the dexoyribose ring of the nucleotides
+      composing the DNA polymer.
+- id: 31498539.3
+  subject: biology
+  subsubject: genomics
+  type: continuing
+  difficulty: easy
+  prompt: |
+      Briefly discuss chemical and biological differences between DNA and RNA.
+  answer: |
+      Chemically, DNA contains four bases (adenine, cytosine, guanine, and
+      thymine) attached to a sugar ring. The sugar ring in DNA is missing an
+      oxygen atom (deoxyribo-).  DNA is usually found as a double-stranded
+      molecule. RNA on the other hands, has uracil instead of thymine, and the
+      sugar base is (ribo-). RNA is a single-stranded molecule.
 
+      Biologically, DNA is responsible for coding the sequence of the resulting
+      pre-mRNA following transcription. Mature mRNA derived from protein-coding
+      genes determines the sequence of amino acids in the translation product.
+- id: 31498539.4
+  subject: biology
+  subsubject: genomics
+  type: continuing
+  difficulty: easy
+  prompt: |
+      Assume "TTACATCGA" represents a doublestranded DNA molecule in standard
+      notation.  Does the molecule contain the submolecule 5'-ATG-3'?
+      What about 5'-CGT-3'?
+  answer: |
+      5'-ATG-3'occurs in the lower strand of the sequence, opposite CAT in the
+      given sequence.  There is no 5'-CGT-3' on either strand.
+- id: 61899925.1
+  subject: modeling
+  subsubject: sequences
+  type: explain
+  difficulty: moderate
+  prompt: |
+      Explain in your own words why it is essential for statistical evaluation
+      of an experiment that the space of all possible outcomes gets defined
+      before the experiment is conducted.
+  answer: |
+      see textbook, chapter "Sequence Spaces"
+- id: 61899925.2
+  subject: modeling
+  subsubject: sequences
+  type: continuing
+  difficulty: moderate
+  prompt: |
+      For the DNA sequence ACGCTGA, determine the number of mononucleotide
+      permuations.
+  answer: |
+      The number of mononucleotide permutations is
+        7! / (2! 2! 2! 1!)  =  (7 * 6 * 5 * 3)  =  42 * 15  =  630.
+- id: 61899925.3
+  subject: modeling
+  subsubject: sequences
+  type: continuing
+  difficulty: moderate
+  prompt: |
+      For the same sequence, find all dinucleotide permutations that also
+      preserve the mononucleotide composition.
+  answer: |
+      There are two permutations: ACGCTGA and ACTGCGA.
+- id: 61899925.4
+  subject: modeling
+  subsubject: sequences
+  type: continuing
+  difficulty: moderate
+  prompt: |
+      Can you find additional dinucleotide permutations that do not preserve
+      the mononucleotide composition?
+      Explain in general if and when that might be possible.
+  answer: |
+      Whenever the original sequence starts and ends with the same letter, then
+      there may be alternative solutions starting from an internal node of the
+      representative graph.  In this case, CGCTGAC or GACGCTG are examples.
+- id: 38616138
+  subject: Linux
+  subsubject: pipe
+  type: explain
+  difficulty: easy
+  prompt: |
+      Explain what the following command does:
+      ```bash
+      ls *.pl | wc -l
+      ```
+  answer: |
+      The command tells us how many files we have in the current directory
+      that end with .pl.

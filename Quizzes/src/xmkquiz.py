@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # Last edit by Daniel Standage, 2016-08-31.
+# Last edit by Volker Brendel, 2016-09-06.
 
 from __future__ import print_function
 import argparse
@@ -34,17 +35,22 @@ class Question(object):
         spacer = '. '
         if self.is_multi_part:
             spacer = '. \n'
-            text = '    1. '
+            text = '    ' + chr(ord('a')) + '. '
             # .replace adds indentation
             text += self.data[key].replace('\n', '\n       ')
             # .rstrip strips extra terminal whitespace
             text = text.rstrip() + '\n\n'
             for i, fu in enumerate(self.followups):
-                text += '    {}. '.format(i + 2)
+                text += '    ' + chr(ord('a')+ i+1) + '. '
                 text += fu.data[key].replace('\n', '\n       ')
                 text = text.rstrip() + '\n\n'
         else:
-            text = self.data[key].replace('\n', '\n    ').rstrip() + '\n'
+            if qnum < 10:
+                text = self.data[key].replace('\n', '\n   ').rstrip() + '\n'
+            elif qnum < 100:
+                text = self.data[key].replace('\n', '\n    ').rstrip() + '\n'
+            else:
+                text = self.data[key].replace('\n', '\n     ').rstrip() + '\n'
 
         print(qnum, spacer, text, sep='', file=outstream)
 
