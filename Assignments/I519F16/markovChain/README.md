@@ -30,7 +30,7 @@ You are of course free to challenge yourself and generalize it.
 
 ## Output
 
-The output will simply printed to stdout.
+The output will simply be printed to stdout.
 This is also handled by the [core code][markovChain.py].
 
 You are strongly encouraged to redirect your output to a file and practice analyzing it via simple command line tools such as cat, sed, grep, wc, etc.
