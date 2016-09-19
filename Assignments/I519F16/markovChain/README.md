@@ -12,7 +12,7 @@ At this point it helps a lot if you have already done the [kmerCount](../kmerCou
 Otherwise, it is highly recommended that you prepare some test parameters for piping into the input, rather than attempting to enter them manually.
 If you still choose to enter parameters manually in stdin, you can terminate with Ctrl+d when you are done.
 
-As usual, all input is handled by the [core code][markovChain.py] for your convenience.
+As usual, all input is handled by the [core code](markovChain.py) for your convenience.
 
 ## Assignment
 
@@ -31,6 +31,6 @@ You are of course free to challenge yourself and generalize it.
 ## Output
 
 The output will simply be printed to stdout.
-This is also handled by the [core code][markovChain.py].
+This is also handled by the [core code](markovChain.py).
 
 You are strongly encouraged to redirect your output to a file and practice analyzing it via simple command line tools such as cat, sed, grep, wc, etc.
