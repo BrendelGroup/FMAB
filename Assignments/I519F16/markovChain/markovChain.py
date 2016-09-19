@@ -49,4 +49,4 @@ if __name__ == '__main__' :
 
     # Print n random sequences to stdout
     for i in range(args.n) :
-        print generate_markov_1 (args.length, cond_prob)
+        print generate_markov (args.length, cond_prob)
