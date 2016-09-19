@@ -46,6 +46,9 @@ def gen_sequence(comp, length) :
     seq_string = ''
 
     ##### Part 3 : Your random sequence generating code goes here
+
+    # Assertion is advised
+    assert abs( sum(comp.values())-1 ) < 0.01 , 'Probabilities do not add up to 1.'
     
     # We generate a sequence of given length
     for i in range(length) :
