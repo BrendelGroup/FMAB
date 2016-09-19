@@ -10,7 +10,7 @@ In a machine learning context, this would be called a **training set**.
 We are **training our statistical model** on these given sequences.
 
 We are going through these sequences using Biopython's fasta parsing capabilities.
-Note that the only difference from the [previous assignment](../RandomSeq) is that we have multiple sequences rather than one, but this is handled in the [core code](kmerCount.py) provided so you do not have to worry about it.
+Note that the only difference from the [previous assignment](../randomSeq) is that we have multiple sequences rather than one, but this is handled in the [core code](kmerCount.py) provided so you do not have to worry about it.
 
 ## Assignment
 
