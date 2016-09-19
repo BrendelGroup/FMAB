@@ -34,14 +34,14 @@ def generate_markov(length, cond_prob, order=1) :
 
 if __name__ == '__main__' :
 
-    # Define input parameters
+    # Define program parameters
     parser = ArgumentParser(description='Generates a random sequence using a markov chain')
     parser.add_argument('-o', '--order', type=int, default=1, help='order of markov chain')
     parser.add_argument('-l', '--length', type=int, default=10, help='length of sequences')
     parser.add_argument('-n', '--number', type=int, default=1, help='number of sequences')
     args = parser.parse_args()
 
-    # Read the parameters from stdin
+    # Read model parameters from stdin
     cond_prob = dict()
     for line in sys.stdin :
         kmer, prob = line.strip().split()
