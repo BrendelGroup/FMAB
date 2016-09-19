@@ -33,8 +33,8 @@ For example,
   * for k=3, each base will be conditioned on the preceding 2 bases : e.g. P(A|AT)  
   * for k=4, each base will be conditioned on the preceding 3 bases : e.g. P(A|ATC)
 
-  * We will only test your code for k=2 but your function should be able to handle any k and normalize accordingly.
-  * If you have not done so in the previous function, you may add pseudocounts here.
+Again, we will only test your code for k=2 but your function should be able to handle any k and normalize accordingly.
+ If you have not done so in the previous function, you may add pseudocounts here.
 
 ## Output
 
