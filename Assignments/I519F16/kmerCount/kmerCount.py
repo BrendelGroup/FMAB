@@ -23,7 +23,7 @@ def count_kmers(sequenceList, k=2) :
 # The last letter of the kmer is conditioned on the first k-1
 
 def normalize_counts(kmer_count, k=2) :
-    kmer_prob = dict()
+    kmer_probs = dict()
 
     ### Insert your code here
     ### Goal : Normalize kmer_count to produce kmer_prob
