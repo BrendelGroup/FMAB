@@ -48,5 +48,5 @@ if __name__ == '__main__' :
         cond_prob[kmer] = float(prob)
 
     # Print n random sequences to stdout
-    for i in range(args.n) :
+    for i in range(args.number) :
         print generate_markov (args.length, cond_prob)
