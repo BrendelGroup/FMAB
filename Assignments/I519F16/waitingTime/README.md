@@ -16,7 +16,7 @@ The provided [core program](waitingTime.py) takes 3 parameters :
 You will fill in the gap in the **waiting_time()** function.
 It should generate a random sequence until the given pattern comes up, then stop and report the length of the sequence generated.
 
-Note that the main loop of this assignment is essentially the same as the [../randomSeq](first assignment).
+Note that the main loop of this assignment is essentially the same as the [first assignment](../randomSeq).
 My implementation is 8 lines and 7 of these are shared between the two.
 
 ## Output
