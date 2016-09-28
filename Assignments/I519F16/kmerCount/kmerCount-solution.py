@@ -9,14 +9,30 @@ from argparse import ArgumentParser
 
 def count_kmers(sequenceList, k=2) :
     kmer_count = dict()
+    
+    # Generate all possible kmers
+    kmerList=['']
+    alphabet = ['A','T','C','G']
+    i=0
+    while i<k :
+        tmp = list()
+        for mer in kmerList :
+            for letter in alphabet :
+                tmp.append(mer+letter)
+        kmerList=tmp
+        i+=1
 
+    # Start each kmer with 1 pseudocount
+    # Note that there are better ways to do this
+    kmer_count = {kmer:1 for kmer in kmerList}
+    
+    # Count all the kmers in all the sequences
     for sequence in sequenceList : 
-        for i in range (len(sequence)-1)  :
-            kmer = sequence[i:i+2]
-            if kmer in kmer_count :
-                kmer_count[kmer] += 1
-            else :
-                kmer_count[kmer] = 1
+        for i in range (len(sequence)-k+1)  :
+            kmer = sequence[i:i+k]
+            assert kmer in kmer_count
+            kmer_count[kmer] += 1
+
     return kmer_count
 
 # This function should normalize kmer counts to provide conditional probabilities
