@@ -18,6 +18,7 @@ It should generate a random sequence until the given pattern comes up, then stop
 
 Note that the main loop of this assignment is essentially the same as the [first assignment](../randomSeq).
 My implementation is 8 lines and 7 of these are shared between the two.
+Instead of a **for loop**, this time you should use a **while loop**.
 
 ## Output
 
