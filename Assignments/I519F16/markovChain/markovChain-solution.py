@@ -7,12 +7,13 @@ def generate_init_prob(cond_prob) :
     init_prob=dict()
 
     # Assuming simplest alphabet
-    init_prob = { 'A':0, 'T':0 , 'C':0, 'G':0 }
+    alphabet = ['A','T','C','G']
+    init_prob = { letter:0 for letter in alphabet }
 
     # Sanity check
     prob_total = sum(cond_prob.values())    # Sum of conditionals
     k = len(cond_prob.keys()[0])            # Inferred k 
-    a_size = len(init_prob)                 # alphabet size
+    a_size = len(alphabet)                  # alphabet size
     assert abs(prob_total-a_size**(k-1))<0.01 , 'Conditional probabilities do not add up to {}.'.format(a_size**(k-1)) 
     
     # Add conditionals to get marginals for the last char in kmer
@@ -34,22 +35,22 @@ def generate_markov(length, cond_prob, order=1) :
     # Generate initial probabilities from conditional probabilities
     init_prob = generate_init_prob(cond_prob)
 
-    ### Goal 1 : generate first character
+    ### Goal 1 : generate first order characters
+    for i in range(order) :
+        dice = random()
+        limit = 0
+        for nuc in init_prob :
+            limit += init_prob[nuc]
+            # We add the letter that dice hits
+            if dice<limit :
+                sequence += nuc
+                break
 
-    dice = random()
-    limit = 0
-    for nuc in init_prob :
-        limit += init_prob[nuc]
-        # We add the letter that dice hits
-        if dice<limit :
-            sequence += nuc
-            break
-
-    assert len(sequence) == 1, 'First character was not generated'
+    assert len(sequence) == order, 'First {} character(s) were not generated'.format(order)
 
     ### Goal 2 : generate rest of the sequence
 
-    for i in range(length-1) :
+    for i in range(length-order) :
         dice = random()
         limit = 0
         last=sequence[-1]
