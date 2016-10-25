@@ -19,8 +19,9 @@ def viterbi(initial, transition, emission, observed) :
 
     return hidden
 
-    # forward-backward will return maximum posterior probability hidden state sequence
-    # AND the marginal posterior probability distribution 
+
+# forward-backward will return maximum posterior probability hidden state sequence
+# AND the marginal posterior probability distribution 
 
 def forwardBackward(initial, transition, emission, observed) :
     hidden = ''
