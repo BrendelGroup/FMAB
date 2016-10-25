@@ -37,12 +37,13 @@ if __name__ == '__main__' :
     parser = ArgumentParser(description='Generic Hidden Markov Model solver')
     parser.add_argument('-p', help='parameter file')
     parser.add_argument('-o', help='observed sequence')
+    parser.add_argument('-v', help='print the posterior marginal probabilities', action='store_true')
     args = parser.parse_args()
 
     initial, transition, emission = parse_parameters(args.p)
 
     print viterbi (initial, transition, emission, args.o)
-    mmpseq, prob = forwardBackward (initial, transition, emission, args.o)
-    print mmpseq
-    print prob.T
+    mmp, prob = forwardBackward (initial, transition, emission, args.o)
+    print mmp
+    if args.v :   print prob.T
     
