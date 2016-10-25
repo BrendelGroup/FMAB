@@ -49,7 +49,7 @@ Sample output :
 ```
 python2 hiddenMArkov.py -p sample_parameters.dat -o HTHTHTHHHTHT
 FFFFFFFFFFFF
-FFFBBBFFFFFF
+FFFFFFBBBFFF
 ```
 
 If the optional parameter **-v** is provided, your program should follow its regular output with the full posterior marginal probability distribution.
@@ -59,7 +59,7 @@ Sample output :
 ```
 python2 hiddenMarkov.py -p sample_parameters.dat -o HTHTHTHHHTHT -v
 FFFFFFFFFFFF
-FFFBBBFFFFFF
+FFFFFFBBBFFF
 [[ 0.48601609  0.51398391]
  [ 0.34585445  0.65414555]
  [ 0.40758347  0.59241653]
