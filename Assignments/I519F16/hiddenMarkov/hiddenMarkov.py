@@ -1,53 +1,49 @@
-from sys import argv
-from numpy import zeros, argmax
+from argparse import ArgumentParser
+from numpy import zeros, argmax, ones
+
+# function to parse the paraeters from a file
+
+def parse_parameters(parameterFilePath) :
+    initial, transition, emission = dict(), dict(), dict() 
+
+    ## Your code here
+
+    return initial, transition, emission
 
 # viterbi will return the most likely hiden state sequence. 
 
 def viterbi(initial, transition, emission, observed) :
-    
-    # infer hidden states
-    states = initial.keys()
+    hidden = ''
 
-    # initialize matrices
-    score = zeros([len(states), len(observed)])
-    trace = zeros([len(states), len(observed)], dtype=int)
-    
-    # forward pass
-    for i, obs in enumerate (observed) :
-        for j, st in enumerate (states) :
-            ### Insert your code here
-            ### Goal : implement forward pass of Viterbi algorithm
-            ### Fill the score and trace matrices
-            if i == 0 :
-                ### Fill the first column here
-            else :
-                ### Fill the rest of the columns here
-    
-    # trace back
-    z = argmax(score[:,-1])
-    hidden = states[z]
+    ## Your code here
 
-    for i in range(1,len(observed))[::-1] :
-        z = trace[z,i]
-        hidden += states[z]
+    return hidden
 
-    # return REVERSED traceback sequence
-    return hidden[::-1]
+
+# forward-backward will return maximum posterior probability hidden state sequence
+# AND the marginal posterior probability distribution 
+
+def forwardBackward(initial, transition, emission, observed) :
+    hidden = ''
+    prob = zeros([len(initial), len(observed)])
+    
+    ## Your code here
+    
+    return hidden, prob
 
 if __name__ == '__main__' :
 
-    # initial probabilities of (F)air and (B)iased coins
-    initial = {'F':0.5, 'B':0.5}
+    # Define program parameters
+    parser = ArgumentParser(description='Generic Hidden Markov Model solver')
+    parser.add_argument('-p', help='parameter file')
+    parser.add_argument('-o', help='observed sequence')
+    parser.add_argument('-v', help='print the posterior marginal probabilities', action='store_true')
+    args = parser.parse_args()
 
-    # transition probabilities btw (F)air and (B)iased coins
-    transition = {'F':{'F':0.8, 'B':0.2}, 'B':{'F':0.2, 'B':0.8} }
+    initial, transition, emission = parse_parameters(args.p)
 
-    # emmision probabilites from (F)air and (B)iased coins
-    emission = {'F':{'H':0.5, 'T':0.5}, 'B':{'H':0.2, 'T':0.8} }
-
-    # observed sequence is the only input to the program
-    sequence = argv[1]
-
-    print viterbi (initial, transition, emission, sequence)
+    print viterbi (initial, transition, emission, args.o)
+    mmp, prob = forwardBackward (initial, transition, emission, args.o)
+    print mmp
+    if args.v :   print prob.T
     
-
